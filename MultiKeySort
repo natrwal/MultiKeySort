@@ -1,0 +1,45 @@
+
+import java.io.File;
+import java.io.*;
+import java.util.*;
+public class Try2
+{
+    public static void main(String[] args) throws Exception
+    {
+        File file=new File(args[0]);
+        Scanner kb=new Scanner(file);
+        String wholeThing=kb.useDelimiter("!*&#^*&^*#&Q").next(); \\chose a delimiter that wouldn't be in the file so that it would copy entire file
+        String[] lines=wholeThing.split("\n");
+        String min;
+        int minIndex;
+        for(int i=0;i<lines.length;++i)
+        {
+            min=lines[i];
+            minIndex=i;
+            for(int j=i+1;j<lines.length;++j)
+            {
+                String[] numCheck=lines[j].split(" "); \\splits line that code is currently checking into name and age
+                String[] numMin=min.split(" "); \\splits current "minimum" into name and age
+                \\if the name on the line currently being checked is the same as the current "minimum" name and the age is less than the current minimum or if the name  
+                \\of the line being checked alphabetically preceeds the "minimum", the line is the new minimum 
+                if((numCheck[0].compareTo(numMin[0])==0)&&(Integer.parseInt(numCheck[1])<Integer.parseInt(numMin[1]))||(numCheck[0].compareTo(numMin[0])<0))
+                {
+                    min=lines[j];
+                    minIndex=j;
+                }
+            }
+            lines[minIndex]=lines[i];
+            lines[i]=min;
+        }
+        for(String a: lines) \\adds a comma after each name
+        {
+            String[] addComma=a.split(" ");
+            if(addComma[1].substring(0,1).equals("0"))
+            {
+                addComma[1]=addComma[1].substring(1,addComma[1].length());
+            }
+            a=addComma[0]+", "+addComma[1];
+            System.out.println(a);
+        }
+    }
+}
